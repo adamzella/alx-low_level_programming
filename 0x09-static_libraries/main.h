@@ -1,7 +1,5 @@
-#ifndef FILE_MAIN
-#define FILE_MAIN
-
-/*a list that was given from the task 0 */
+#ifndef MAIN_H
+#define MAIN_H
 
 int _putchar(char c);
 int _islower(int c);
@@ -25,3 +23,4 @@ char *_strpbrk(char *s, char *accept);
 char *_strstr(char *haystack, char *needle);
 
 #endif
+
