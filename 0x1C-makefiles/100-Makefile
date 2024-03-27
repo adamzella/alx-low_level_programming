@@ -2,10 +2,10 @@
 CC := gcc
 
 # Source files
-SRC := $(wildcard *.c)
+SRC := main.c school.c
 
 # Object files
-OBJ := $(SRC:.c=.o)
+OBJ := main.o school.o
 
 # Executable name
 NAME := school
@@ -16,11 +16,13 @@ RM := /bin/rm -f
 # Compiler flags
 CFLAGS := -Wall -Werror -Wextra -pedantic
 
+.PHONY: all clean oclean fclean re
+
 # Rule to build the executable
 all: $(NAME)
 
 $(NAME): $(OBJ)
-    $(CC) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) -o $(NAME)
 
 # Rule to clean Emacs and Vim temporary files, along with the executable
 clean:
@@ -36,10 +38,11 @@ fclean: clean oclean
 # Rule to force recompilation of all source files
 re: fclean all
 
-# Dependencies
-$(OBJ): %.o: %.c m.h
+# Rule to compile .c files to .o files
+%.o: %.c m.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Prevent make from deleting object files implicitly
-.PRECIOUS: $(OBJ)
+# Check if header file m.h exists
+m.h:
+    @test -e m.h || (echo "Header file m.h is missing."; exit 1)
 
