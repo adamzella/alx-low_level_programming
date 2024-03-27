@@ -25,17 +25,18 @@ def island_perimeter(grid):
         for j in range(len(grid[0])):
             if grid[i][j] == 1:
                 # Count the perimeter for each land cell
-                if is_water(i - 1, j):
-                    perimeter += 1
-                if is_water(i + 1, j):
-                    perimeter += 1
-                if is_water(i, j - 1):
-                    perimeter += 1
-                if is_water(i, j + 1):
-                    perimeter += 1
+                perimeter += 4  # Start with assuming all sides are exposed
+                # Check adjacent cells and decrement perimeter if neighbor is land
+                if i > 0 and grid[i - 1][j] == 1:
+                    perimeter -= 1
+                if i < len(grid) - 1 and grid[i + 1][j] == 1:
+                    perimeter -= 1
+                if j > 0 and grid[i][j - 1] == 1:
+                    perimeter -= 1
+                if j < len(grid[0]) - 1 and grid[i][j + 1] == 1:
+                    perimeter -= 1
 
     return perimeter
-
 
 if __name__ == "__main__":
     grid = [
@@ -46,6 +47,4 @@ if __name__ == "__main__":
         [0, 0, 0, 0, 0, 0]
     ]
     print(island_perimeter(grid))
-
-
 
