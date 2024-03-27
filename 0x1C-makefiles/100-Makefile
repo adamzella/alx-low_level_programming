@@ -4,7 +4,7 @@
 CC = gcc
 
 # Source files
-SRC = $(wildcard *.c)
+SRC = main.c
 
 # Object files
 OBJ = $(SRC:.c=.o)
@@ -15,16 +15,19 @@ NAME = school
 # Program to delete files
 RM = /bin/rm -f
 
+# Compiler flags
+CFLAGS = -Wall -Werror -Wextra -pedantic
+
 # Main rule
 all: $(NAME)
 
 # Rule to build the executable
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME)
+	$(CC) $(OBJ) -o $@
 
 # Rule to compile source files
 %.o: %.c
-	$(CC) -c $< -o $@
+	$(CC) -c $< -o $@ $(CFLAGS)
 
 # Rule to clean Emacs and Vim temporary files
 clean:
@@ -40,6 +43,11 @@ fclean: clean oclean
 
 # Rule to force recompilation of all source files
 re: fclean all
+
+# Check if header file m.h exists
+ifeq (,$(wildcard m.h))
+$(error "Header file m.h is missing")
+endif
 
 .PHONY: all clean oclean fclean re
 
